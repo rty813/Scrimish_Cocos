@@ -1,0 +1,139 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "SelectCardEnd1",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 1.6666666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0.8333333333333334,
+          "value": [
+            -66.3,
+            250
+          ],
+          "curve": "cubicOut"
+        },
+        {
+          "frame": 1.6666666666666667,
+          "value": [
+            -66.3,
+            0
+          ]
+        }
+      ]
+    },
+    "paths": {
+      "1": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -102,
+                -120.6
+              ],
+              "curve": "cubicIn"
+            },
+            {
+              "frame": 0.8333333333333334,
+              "value": [
+                -102,
+                -10.6
+              ]
+            }
+          ]
+        }
+      },
+      "2": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -102,
+                -39.9
+              ],
+              "curve": "cubicIn"
+            },
+            {
+              "frame": 0.8333333333333334,
+              "value": [
+                -95.5,
+                -6.9
+              ]
+            }
+          ]
+        }
+      },
+      "3": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -102,
+                40.6
+              ],
+              "curve": "cubicIn"
+            },
+            {
+              "frame": 0.8333333333333334,
+              "value": [
+                -88.8,
+                -3.4
+              ]
+            }
+          ]
+        }
+      },
+      "4": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -102,
+                118.6
+              ],
+              "curve": "cubicIn"
+            },
+            {
+              "frame": 0.8333333333333334,
+              "value": [
+                -82.3,
+                -0.4
+              ]
+            }
+          ]
+        }
+      },
+      "5": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -102,
+                200
+              ],
+              "curve": "cubicIn"
+            },
+            {
+              "frame": 0.8333333333333334,
+              "value": [
+                -75.5,
+                2.5
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}
