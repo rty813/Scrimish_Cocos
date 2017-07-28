@@ -1,10 +1,7 @@
 {
   "appKey": "",
   "appSecret": "",
-  "excludeScenes": [
-    "0ef1640c-45e5-4152-9c99-741e4dd4b7ff",
-    "2d2f792f-a40c-49bb-a189-ed176a246e49"
-  ],
+  "excludeScenes": [],
   "includeAnySDK": false,
   "includeSdk": [
     "anysdk"
@@ -25,5 +22,5 @@
   "renderMode": "0",
   "startScene": "6e6cf919-e180-4e08-b85d-f90fd899a49c",
   "title": "Scrimish",
-  "webOrientation": "auto"
+  "webOrientation": "portrait"
 }

@@ -2,6 +2,7 @@ var Constants = require('Constants');
 const URL = Constants.URL;
 const STAND = Constants.STAND
 const GAME_STATE = Constants.GAME_STATE;
+var judge = require('judge');
 
 cc.Class({
     extends: cc.Component,
@@ -18,6 +19,14 @@ cc.Class({
         btnDiscard: {
             default: null,
             type: cc.Node,
+        },
+        player1: {
+            default: null,
+            type: cc.Sprite,
+        },
+        player2: {
+            default: null,
+            type: cc.Sprite,
         }
     },
 
@@ -61,6 +70,23 @@ cc.Class({
         this.pile5 = this.myCards.getChildByName('pile5');
         this.showInfo('请按照一定次序排放你的牌');
         this.turn = G.stand;
+        if (this.turn === STAND.BLACK) {
+            var self = this;
+            cc.loader.loadRes('player1', cc.SpriteFrame, function(err, spriteFrame) {
+                self.player1.spriteFrame = spriteFrame;
+            });
+            cc.loader.loadRes('player2', cc.SpriteFrame, function(err, spriteFrame) {
+                self.player2.spriteFrame = spriteFrame;
+            });
+        } else {
+            var self = this;
+            cc.loader.loadRes('player2', cc.SpriteFrame, function(err, spriteFrame) {
+                self.player1.spriteFrame = spriteFrame;
+            });
+            cc.loader.loadRes('player1', cc.SpriteFrame, function(err, spriteFrame) {
+                self.player2.spriteFrame = spriteFrame;
+            });
+        }
         this.selectNum = 0;
         this.node.on('cardSelect', function(event) {
             console.log('receive');
@@ -94,7 +120,9 @@ cc.Class({
                 if (G.gameManager.selectPile1 == null) {
                     if (event.getUserData().parent === 'MyCards') {
                         G.gameManager.selectPile1 = event.getUserData();
-                        G.gameManager.btnDiscard.active = true;
+                        if (event.getUserData().getCardName() !== 'C') {
+                            G.gameManager.btnDiscard.active = true;
+                        }
                         console.log(event.getUserData().getCardName());
                     }
                 } else {
@@ -127,9 +155,11 @@ cc.Class({
             console.log('己方卡牌：' + card1);
             console.log('对方卡牌：' + card2);
 
+            var result = judge.judge(card1, card2);
+
             G.gameManager.selectPile1.getCard().getComponent('Card').stopAnim();
-            G.gameManager.selectPile1.getCard().getComponent('Card').pkAnim('MyCards', card, 'discard');
-            G.gameManager.selectPile2.getCard().getComponent('Card').pkAnim('HisCards', card, 'back');
+            G.gameManager.selectPile1.getCard().getComponent('Card').pkAnim('MyCards', card, result[0]);
+            G.gameManager.selectPile2.getCard().getComponent('Card').pkAnim('HisCards', card, result[1]);
             G.gameManager.selectPile1 = null;
         })
 
@@ -145,9 +175,10 @@ cc.Class({
             var card2 = args[1];
             console.log('己方卡牌：' + card1);
             console.log('对方卡牌：' + card2);
+            var result = judge.judge(card2, card1);
 
-            pile1.getComponent('pile').getCard().getComponent('Card').pkAnim('MyCards', args[1], 'back');
-            pile2.getComponent('pile').getCard().getComponent('Card').pkAnim('HisCards', args[1], 'discard');
+            pile1.getComponent('pile').getCard().getComponent('Card').pkAnim('MyCards', args[1], result[1]);
+            pile2.getComponent('pile').getCard().getComponent('Card').pkAnim('HisCards', args[1], result[0]);
 
             G.roomSocket.emit('response', pile1.getComponent('pile').getCardName());
         });
@@ -170,6 +201,15 @@ cc.Class({
             G.roomSocket.disconnect();
             cc.director.loadScene('Match');
         });
+    },
+
+    gameOver: function(result) {
+        if (result === 'win') {
+            this.showInfo('你赢啦!')
+        } else {
+            this.showInfo('你输了！')
+        }
+        this.gameState = GAME_STATE.OVER;
     },
 
     changeTurn() {

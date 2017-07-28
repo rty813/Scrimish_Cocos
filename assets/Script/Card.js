@@ -63,7 +63,6 @@ cc.Class({
     pkAnim: function(type, aCard, handle) {
         if (type === 'MyCards') {
             var pos0 = this.node.position;
-            console.log(pos0.y);
             var pos1 = this.node.parent.convertToNodeSpaceAR(cc.v2(160, 400));
             var seq;
             if (handle === 'back') {
@@ -75,11 +74,12 @@ cc.Class({
                     self.node.parent.getComponent('pile').popCard();
                 }, this, null)
                 seq = cc.sequence(cc.moveTo(0.5, pos1.x, pos1.y), cc.delayTime(2.2), cc.fadeOut(0.7), finishedDiscard);
+            } else if ((handle === 'win') || (handle === 'lose')) {
+                seq = cc.moveTo(0.5, pos1.x, pos1.y);
             }
             this.node.runAction(seq);
         } else if (type === 'HisCards') {
             var pos0 = this.node.position;
-            console.log(pos0.x);
             var pos1 = this.node.parent.convertToNodeSpaceAR(cc.v2(300, 400));
             var self = this;
 
@@ -110,9 +110,16 @@ cc.Class({
             if (handle === 'back') {
                 seq = cc.sequence(cc.moveTo(0.5, pos1.x, pos1.y), cc.scaleTo(0.1, 0, 0.07), finishedIn, cc.scaleTo(0.1, 0.07, 0.07), cc.delayTime(2),
                     cc.scaleTo(0.1, 0, 0.07), finishedout, cc.scaleTo(0.1, 0.07, 0.07), cc.moveTo(0.5, pos0.x, pos0.y), finishedStateChange);
-            } else {
+            } else if (handle === 'discard') {
                 seq = cc.sequence(cc.moveTo(0.5, pos1.x, pos1.y), cc.scaleTo(0.1, 0, 0.07), finishedIn, cc.scaleTo(0.1, 0.07, 0.07), cc.delayTime(2),
                     cc.fadeOut(0.7), finishedDiscard, finishedStateChange);
+            } else if ((handle === 'win') || (handle === 'lose')) {
+                seq = cc.sequence(cc.moveTo(0.5, pos1.x, pos1.y), cc.scaleTo(0.1, 0, 0.07), finishedIn, cc.scaleTo(0.1, 0.07, 0.07));
+                if (handle === 'win') {
+                    G.gameManager.gameOver('lose');
+                } else {
+                    G.gameManager.gameOver('win');
+                }
             }
             this.node.runAction(seq);
         }

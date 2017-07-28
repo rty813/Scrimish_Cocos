@@ -18,6 +18,9 @@ cc.Class({
 
     onPileClicked: function() {
         if ((G.gameManager.gameState == GAME_STATE.PLAYING) && (G.gameManager.turn == STAND.BLACK)) {
+            if (this.getCardName() === 'S') {
+                return;
+            }
             if (this.parent === 'MyCards') {
                 this.topCard.getComponent('Card').playAnim();
             }

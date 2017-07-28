@@ -1,4 +1,4 @@
-const URL = '127.0.0.1:4747';
+const URL = '139.199.37.92:4747';
 const URLL = '139.199.37.92:4747';
 const STAND = cc.Enum({
     BLACK: 47,
